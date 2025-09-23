@@ -9,7 +9,7 @@ const UserTableWrapper = ({ users }) => {
   const handleApplyFilters = (filters) => {
     const { firstName, lastName, email, department } = filters;
     const filtered = users.filter((user) => {
-      return (
+      return ( 
         user.name.toLowerCase().includes(firstName.toLowerCase()) &&
         user.username.toLowerCase().includes(lastName.toLowerCase()) &&
         user.email.toLowerCase().includes(email.toLowerCase()) &&
@@ -21,7 +21,7 @@ const UserTableWrapper = ({ users }) => {
 
   return (
     <div>
-      <Button variant="outlined" onClick={() => setOpenFilter(true)}>
+      {/* <Button variant="outlined" onClick={() => setOpenFilter(true)}>
         Filter
       </Button>
 
@@ -29,7 +29,7 @@ const UserTableWrapper = ({ users }) => {
         open={openFilter}
         onClose={() => setOpenFilter(false)}
         onApply={handleApplyFilters}
-      />
+      /> */}
 
       {/* Render your table here using filteredUsers */}
     </div>

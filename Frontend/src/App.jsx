@@ -3,9 +3,10 @@ import { createBrowserRouter, RouterProvider } from "react-router-dom";
 
 import AppLayout from "./layouts/AppLayout";
 import DashboardPage from "./pages/DashboardPage";
+import { UserProvider } from "./context_Api/UserContext";
+import { FilterProvider } from "./context_Api/UserFilterContext";
 
 const App = () => {
-
   //* Define the all routes.........
   const router = createBrowserRouter([
     {
@@ -19,7 +20,13 @@ const App = () => {
       ],
     },
   ]);
-  return <RouterProvider router={router} />;
+  return (
+    <UserProvider>
+      <FilterProvider>
+        <RouterProvider router={router} />
+      </FilterProvider>
+    </UserProvider>
+  );
 };
 
 export default App;

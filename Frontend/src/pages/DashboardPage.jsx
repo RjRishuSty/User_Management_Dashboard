@@ -1,36 +1,55 @@
-import { Box } from "@mui/material";
-import React, { useEffect, useState } from "react";
-import axios from "axios";
-import DataTable from "../components/DataTable";
+import { Box, Container, useMediaQuery } from "@mui/material";
+import Search from "../components/Search";
+import CustomAllBtn from "../components/CustomAllBtn";
+import { useUsers } from "../context_Api/UserContext";
+import UserTable from "../components/UserTable";
+import { useFilter } from "../context_Api/UserFilterContext";
 import UserFilterDialog from "../components/UserFilterDialog";
-import UserTableWrapper from "../components/UserTableWrapper";
 
 const DashboardPage = () => {
-  const [isLoading, setIsLoading] = useState(true);
-  const [users, setUsers] = useState([]);
-
-  //* This UseEffect fetch user data from JSONPlaceholder.............
-  useEffect(() => {
-    const fetchUserData = async () => {
-      try {
-        const response = await axios.get(
-          "https://jsonplaceholder.typicode.com/users"
-        );
-        setUsers(response.data);
-      } catch (error) {
-        console.log("Error", error);
-      } finally {
-        setIsLoading(false);
-      }
-    };
-    fetchUserData();
-  }, []);
-  console.log("User Data", users);
+  //* IsLaptop and isTablet that handle responsive. when screen size is laptop size or Tablet size.
+  const isLaptop = useMediaQuery("(max-width:1160px)");
+  const isTablet = useMediaQuery("(max-width:800px)");
+  const { loading } = useUsers();
+  const {openFilterDialog} = useFilter();
   return (
-    <Box sx={{ minHeight: "80vh" }}>
-    {/* <UserTableWrapper/>
-    <UserFilterDialog/>
-      {isLoading ? "" : <DataTable users={users} />} */}
+    <Box
+      sx={{
+        height: "auto",
+        overflowY: "auto",
+      }}
+    >
+      {isLaptop && (
+        <Box
+          sx={{
+            width: "100%",
+            display: "flex",
+            justifyContent: "space-around",
+            alignItems: "center",
+          }}
+        >
+          <Search />
+          {!isTablet && <CustomAllBtn useIn="search" />}
+        </Box>
+      )}
+
+      <Container
+        maxWidth="xl"
+        sx={{
+          minHeight: "69vh",
+          display: "flex",
+          justifyContent: "center",
+          alignItems: "center",
+          my: 5,
+        }}
+      >
+        {loading ? "Loading..." : <UserTable />}
+      </Container>
+
+      {/* Open Filter or Add dialog */}
+      {
+        openFilterDialog && <UserFilterDialog/>
+      }
     </Box>
   );
 };

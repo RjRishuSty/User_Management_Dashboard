@@ -1,8 +1,10 @@
-import { TextField, InputAdornment } from "@mui/material";
+import { TextField, InputAdornment, useMediaQuery } from "@mui/material";
 import React from "react";
 import SearchIcon from "@mui/icons-material/Search";
 
 const Search = () => {
+  //* IsLaptop that handle responsive. when screen size is laptop size.
+  const isLaptop = useMediaQuery("(max-width:1160px)");
   return (
     <TextField
       fullWidth
@@ -20,7 +22,7 @@ const Search = () => {
       }}
       sx={{
         bgcolor: "#ccbdf5",
-        borderRadius: 55,
+        borderRadius: isLaptop?0:55,
         "& .MuiOutlinedInput-notchedOutline": {
           border: "none", // remove default border
         },

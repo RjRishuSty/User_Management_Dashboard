@@ -6,15 +6,14 @@ const Footer = () => {
     <Box
       component="footer"
       sx={{
-        py: 2,
+        py: 3,
         textAlign: "center",
         borderTop: "1px solid",
         borderColor: "divider",
-        bgcolor: "background.paper",
-        mt: "auto",
+        bgcolor: "secondary.dark",
       }}
     >
-      <Typography variant="body2" color="text.secondary">
+      <Typography variant="body2" color="text.secondary" sx={{letterSpacing:0.7}}>
         © {new Date().getFullYear()} User Management Dashboard. All rights reserved.
       </Typography>
     </Box>

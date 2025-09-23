@@ -5,11 +5,13 @@ import {
   DialogContent,
   DialogActions,
   Button,
-  TextField,
+  TextField, 
   Stack,
 } from "@mui/material";
+import { useFilter } from "../context_Api/UserFilterContext";
 
-const UserFilterDialog = ({ open, onClose, onApply }) => {
+const UserFilterDialog = ({  onApply }) => {
+  const {openFilterDialog,handleCloseFilterDialog} = useFilter();
   const [filters, setFilters] = useState({
     firstName: "",
     lastName: "",
@@ -23,18 +25,18 @@ const UserFilterDialog = ({ open, onClose, onApply }) => {
 
   const handleApply = () => {
     onApply(filters);
-    onClose();
+    handleCloseFilterDialog();
   };
 
   const handleReset = () => {
     const resetFilters = { firstName: "", lastName: "", email: "", department: "" };
     setFilters(resetFilters);
     onApply(resetFilters);
-    onClose();
+    handleCloseFilterDialog();
   };
 
   return (
-    <Dialog open={open} onClose={onClose} sx={{border:'3px solid red'}}>
+    <Dialog open={openFilterDialog} onClose={handleCloseFilterDialog} sx={{border:'3px solid red'}}>
       <DialogTitle>Filter Users</DialogTitle>
       <DialogContent>
         <Stack spacing={2} mt={1}>

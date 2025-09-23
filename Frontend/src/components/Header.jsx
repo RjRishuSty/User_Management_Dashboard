@@ -2,54 +2,40 @@ import React from "react";
 import {
   AppBar,
   Box,
-  Button,
   IconButton,
   Stack,
   Toolbar,
   useMediaQuery,
 } from "@mui/material";
-import AddIcon from "@mui/icons-material/Add";
-import FilterAltOffSharpIcon from "@mui/icons-material/FilterAltOffSharp";
 import MenuSharpIcon from "@mui/icons-material/MenuSharp";
 import Logo from "./Logo";
 import Search from "./Search";
+import CustomAllBtn from "./CustomAllBtn";
 
 const Header = () => {
+  //* IsLaptop and isTablet that handle responsive. when screen size is laptop size or Tablet size.
+  const isLaptop = useMediaQuery("(max-width:1160px)");
   const isTablet = useMediaQuery("(max-width:800px)");
   return (
     <Stack>
-      <AppBar position="static" sx={{ bgcolor: "primary.main", p: 0.7 }}>
+      <AppBar position="static" sx={{ bgcolor: "primary.dark", p: 0.7 }}>
         <Toolbar>
           <Logo />
           {!isTablet ? (
             <>
-              <Box sx={{ width: "40%", marginLeft: "auto" }}>
-                <Search />
-              </Box>
+              {!isLaptop && (
+                <Box sx={{ width: "40%", marginLeft: "auto" }}>
+                  <Search />
+                </Box>
+              )}
               <Box sx={{ marginLeft: "auto" }}>
-                <Button
-                  startIcon={<AddIcon />}
-                  variant="outlined"
-                  sx={{
-                    mr: 2,
-                    borderColor: "text.secondary",
-                    color: "text.secondary",
-                  }}
-                >
-                  Create New User
-                </Button>
-                <Button
-                  endIcon={<FilterAltOffSharpIcon />}
-                  variant="contained"
-                  sx={{ bgcolor: "secondary.dark" }}
-                >
-                  Filter User
-                </Button>
+                <CustomAllBtn useIn="filter" />
+                <CustomAllBtn useIn="create" />
               </Box>
             </>
           ) : (
-            <IconButton sx={{marginLeft:'auto',}}>
-              <MenuSharpIcon fontSize="large" sx={{color:'#fff'}} />
+            <IconButton sx={{ marginLeft: "auto" }}>
+              <MenuSharpIcon fontSize="large" sx={{ color: "#fff" }} />
             </IconButton>
           )}
         </Toolbar>
