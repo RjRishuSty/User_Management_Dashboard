@@ -50,3 +50,8 @@ This project is a web-based dashboard for managing user data. It provides an int
 1. **Clone the Repository:**  
 ```bash
 git clone https://github.com/RjRishuSty/User_Management_Dashboard.git
+cd User_Management_Dashboard/frontend
+npm install
+npm start
+
+
