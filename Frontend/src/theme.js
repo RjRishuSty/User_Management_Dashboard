@@ -54,6 +54,14 @@ const theme = createTheme({
         },
       },
     },
+    MuiTableCell: {
+      styleOverrides: {
+        root: {
+          fontWeight: 600,
+          color:'#333333'
+        },
+      },
+    },
    
   },
 });

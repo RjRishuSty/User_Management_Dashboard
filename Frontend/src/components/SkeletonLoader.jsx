@@ -26,7 +26,7 @@ export default function SkeletonLoader() {
           </TableRow>
         </TableHead>
         <TableBody>
-          {Array.from({ length: 5 }).map((_, rowIndex) => (
+          {Array.from({ length: 8 }).map((_, rowIndex) => (
             <TableRow key={rowIndex}>
               {Array.from({ length: 6 }).map((__, colIndex) => (
                 <TableCell key={colIndex}>

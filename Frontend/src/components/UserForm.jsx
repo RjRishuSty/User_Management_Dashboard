@@ -15,7 +15,7 @@ const UserForm = ({ formData, handleChange }) => {
             variant="outlined"
             value={formData[item.id] || " "}
             onChange={handleChange}
-          />
+          /> 
         </Grid>
       ))}
     </Grid>

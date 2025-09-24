@@ -27,17 +27,21 @@ export const UserProvider = ({ children }) => {
 
   //* This Handler Add new user data.
   const handlerAddUser = async (newUser) => {
+    setLoading(true);
     try {
       const response = await api.post("/users", newUser);
       setUsers((prev) => [...prev, response.data]); 
     } catch (err) {
         console.log(err.message)
       setError("Failed to add new user.");
+    }finally{
+      setLoading(false)
     }
   };
 
   //* This Handler  Update user data.
   const handlerUpdateUser = async (id, updatedUser) => {
+    setLoading(true);
     try {
       const response = await api.put(`/users/${id}`, updatedUser);
       setUsers((prev) =>
@@ -46,6 +50,8 @@ export const UserProvider = ({ children }) => {
     } catch (err) {
         console.log(err.message)
       setError("Failed to update user data.");
+    }finally{
+      setLoading(false)
     }
   };
 

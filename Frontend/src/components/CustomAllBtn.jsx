@@ -1,16 +1,20 @@
 import React from "react";
-import { Button } from "@mui/material";
+import { Button, useMediaQuery } from "@mui/material";
 import FilterListIcon from "@mui/icons-material/FilterList";
 import PersonAddIcon from "@mui/icons-material/PersonAdd";
 import { useDialog } from "../context_Api/DialogContext";
 
 const CustomAllBtn = ({ useIn }) => {
-  const { handleOpenDialog  } = useDialog();
+  const { handleOpenDialog } = useDialog();
+  //* IsLaptop and isTablet that handle responsive. when screen size is laptop size or Tablet size.
+  const isLaptop = useMediaQuery("(max-width:1160px)");
+  const isTablet = useMediaQuery("(max-width:800px)");
   const renderButton = () => {
     switch (useIn) {
       case "filter":
         return (
           <Button
+          fullWidth={isTablet?true:false}
             startIcon={<FilterListIcon />}
             variant="contained"
             sx={{ bgcolor: "secondary.dark", mr: 2 }}
@@ -24,9 +28,11 @@ const CustomAllBtn = ({ useIn }) => {
         return (
           <Button
             variant="outlined"
+            fullWidth={isTablet?true:false}
             sx={{
-              borderColor: "text.secondary",
-              color: "text.secondary",
+              borderColor:isTablet?"primary.main": "text.secondary",
+              color: isTablet?"primary.main":"text.secondary",
+              mb:isTablet?2:0
             }}
             startIcon={<PersonAddIcon />}
             onClick={() => handleOpenDialog("create")}
@@ -39,11 +45,13 @@ const CustomAllBtn = ({ useIn }) => {
         return (
           <Button
             variant="contained"
+            size={isLaptop ? "medium" : "small"}
             sx={{
-              bgcolor: "secondary.dark",
+              bgcolor:"secondary.dark",
               mr: 2,
               textTransform: "uppercase",
               px: 5,
+              py: 1.8,
               ml: 2,
             }}
           >

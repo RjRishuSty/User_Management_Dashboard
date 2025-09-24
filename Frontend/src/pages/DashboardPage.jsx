@@ -22,8 +22,9 @@ const DashboardPage = () => {
       }}
     >
       {isLaptop && (
-        <Box
+        <Container
           sx={{
+            mt:isLaptop?2:1,
             width: "100%",
             display: "flex",
             justifyContent: "space-around",
@@ -32,17 +33,16 @@ const DashboardPage = () => {
         >
           <Search />
           {!isTablet && <CustomAllBtn useIn="search" />}
-        </Box>
+        </Container>
       )}
 
       <Container
         maxWidth="xl"
         sx={{
-          minHeight: "69vh",
-          display: "flex",
-          justifyContent: "center",
-          alignItems: "center",
-          my: 5,
+          minHeight: "auto",
+          // border:'2px solid red',
+          mt:5,
+          mb:3
         }}
       >
         {loading? <SkeletonLoader/> : <UserTable />}

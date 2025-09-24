@@ -16,11 +16,11 @@ import { useState } from "react";
 import { useUsers } from "../context_Api/UserContext";
 import { useFilter } from "../context_Api/UserFilterContext";
 
-
 const UserTable = () => {
   //* Custom hook that provide all user data.
   const { users } = useUsers();
-  const { filteredUsers } = useFilter();
+  const { filteredUsers, isFilterApplied } = useFilter();
+
   const [page, setPage] = useState(0);
   const [rowsPerPage, setRowsPerPage] = useState(5);
 
@@ -34,7 +34,8 @@ const UserTable = () => {
     setRowsPerPage(Number(event.target.value));
     setPage(0); // reset to first page
   };
-  const usersToShow = filteredUsers.length ? filteredUsers : users;
+
+  const usersToShow = isFilterApplied ? filteredUsers : users;
 
   //* slice users based on page + rowsPerPage
   const paginatedUsers = usersToShow.slice(
@@ -47,7 +48,7 @@ const UserTable = () => {
   };
 
   return (
-    <Paper sx={{ width: "100%" }}>
+    <Paper sx={{ width: "100%", height: "100%" }}>
       <TableContainer>
         <Table>
           <TableHead>
@@ -67,28 +68,38 @@ const UserTable = () => {
             </TableRow>
           </TableHead>
           <TableBody>
-            {paginatedUsers.map((user, index) => (
-              <TableRow
-                key={user.id}
-                sx={{
-                  bgcolor: handlerIsEven(index)
-                    ? "background.paper"
-                    : "#f2f2f2",
-                }}
-              >
-                <TableCell>{user.id}</TableCell>
-                <TableCell>{user.name}</TableCell>
-                <TableCell>{user.email}</TableCell>
-                <TableCell>{user.phone}</TableCell>
-                <TableCell>{user.company.name}</TableCell>
-                {/* //* Add user action button like update delete. */}
-                <TableCell>
-                  <UserTableActions
-                    userId={user.id}
-                  />
+            {paginatedUsers.length > 0 ? (
+              paginatedUsers.map((user, index) => (
+                <TableRow
+                  key={user.id}
+                  sx={{
+                    bgcolor: handlerIsEven(index)
+                      ? "background.paper"
+                      : "#f2f2f2",
+                  }}
+                >
+                  <TableCell>{user.id}</TableCell>
+                  <TableCell>{user.name}</TableCell>
+                  <TableCell>{user.email}</TableCell>
+                  <TableCell>{user.phone}</TableCell>
+                  <TableCell>{user.company.name}</TableCell>
+                  {/* //* Add user action button like update delete. */}
+                  <TableCell>
+                    <UserTableActions userId={user.id} />
+                  </TableCell>
+                </TableRow>
+              ))
+            ) : (
+              <TableRow>
+                <TableCell
+                  colSpan={6}
+                  align="center"
+                  sx={{ fontWeight: 600, color: "text.primary" }}
+                >
+                  No data found
                 </TableCell>
               </TableRow>
-            ))}
+            )}
           </TableBody>
         </Table>
       </TableContainer>

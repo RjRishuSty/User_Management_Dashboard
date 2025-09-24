@@ -14,12 +14,13 @@ import UserForm from "./UserForm";
 import { useFilter } from "../context_Api/UserFilterContext";
 import { useCallback, useEffect, useMemo, useState } from "react";
 import { useUsers } from "../context_Api/UserContext";
+import CircularProgress from "@mui/material/CircularProgress";
 
 const CustomeAllDialog = () => {
   //* Custome hook that provide data related Dialog.
   const { openDialogType, selectedUser, handleCloseDialog } = useDialog();
   const { handleApplyFilters, handleResetFilters } = useFilter();
-  const { handlerAddUser, handlerUpdateUser } = useUsers();
+  const { handlerAddUser, handlerUpdateUser, loading } = useUsers();
   //* This hook provide me show the error message.
   const { enqueueSnackbar } = useSnackbar();
 
@@ -120,7 +121,7 @@ const CustomeAllDialog = () => {
         company: { name: formData.company },
       });
       enqueueSnackbar("User updated successfully.", { variant: "success" });
-    }else if (openDialogType === "filter") {
+    } else if (openDialogType === "filter") {
       handleApplyFilters(formData);
     }
 
@@ -136,8 +137,6 @@ const CustomeAllDialog = () => {
     handleValidate,
     enqueueSnackbar,
   ]);
-
-  console.log("Formdata", formData);
 
   //* Reset handler
   const handleResetClick = useCallback(() => {
@@ -181,13 +180,23 @@ const CustomeAllDialog = () => {
       <DialogActions>
         <Button onClick={handleResetClick}>Reset</Button>
         <Button variant="contained" onClick={handleApplyClick}>
-          {openDialogType === "filter"
-            ? "Apply Filter"
-            : openDialogType === "create"
-            ? "Create User"
-            : openDialogType === "update"
-            ? "Update User"
-            : ""}
+          {openDialogType === "filter" ? (
+            "Apply Filter"
+          ) : openDialogType === "create" ? (
+            loading ? (
+              <CircularProgress size={20} sx={{color:'white'}} />
+            ) : (
+              "Create User"
+            )
+          ) : openDialogType === "update" ? (
+            loading ? (
+              <CircularProgress size={20} sx={{color:'white'}} />
+            ) : (
+              "Update User"
+            )
+          ) : (
+            ""
+          )}
         </Button>
       </DialogActions>
     </Dialog>
