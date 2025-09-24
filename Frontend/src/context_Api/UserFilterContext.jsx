@@ -1,24 +1,34 @@
 import React, { createContext, useContext, useState } from "react";
+import { useUsers } from "./UserContext";
 //* Create user Filter context that manage open modal and apply filter.
 const UserFilterContext = createContext();
 
 export const FilterProvider = ({ children }) => {
-  const [openFilterDialog, setOpenFilterDialog] = useState(false);
-//   const [applyFilter, setApplyFilter] = useState(false);
+  const { users } = useUsers();
+  const [filteredUsers, setFilteredUsers] = useState(users);
 
-  //* This Handle control Dialog.
-  const handleOpenFilterDialog = () => {
-    setOpenFilterDialog(true);
+  const handleApplyFilters = (filters) => {
+    const { name, email, phone, company } = filters;
+
+    const filtered = users.filter((user) => {
+      return (
+        (!name || user.name.toLowerCase().includes(name.toLowerCase())) &&
+        (!email || user.email.toLowerCase().includes(email.toLowerCase())) &&
+        (!phone || user.phone.toLowerCase().includes(phone.toLowerCase())) &&
+        (!company ||
+          user.company.name.toLowerCase().includes(company.toLowerCase()))
+      );
+    });
+
+    setFilteredUsers(filtered);
   };
- 
-  //* This Handle  Close filter Dialog.
-  const handleCloseFilterDialog = () => {
-    setOpenFilterDialog(true);
+
+    //* Reset all filters....
+  const handleResetFilters = () => {
+    setFilteredUsers(users);
   };
   return (
-    <UserFilterContext.Provider
-      value={{ openFilterDialog, handleOpenFilterDialog,handleCloseFilterDialog }}
-    >
+    <UserFilterContext.Provider value={{filteredUsers, handleApplyFilters,handleResetFilters }}>
       {children}
     </UserFilterContext.Provider>
   );

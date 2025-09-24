@@ -26,7 +26,7 @@ export const UserProvider = ({ children }) => {
   };
 
   //* This Handler Add new user data.
-  const HandlerAddUser = async (newUser) => {
+  const handlerAddUser = async (newUser) => {
     try {
       const response = await api.post("/users", newUser);
       setUsers((prev) => [...prev, response.data]); 
@@ -72,7 +72,7 @@ export const UserProvider = ({ children }) => {
         loading,
         error,
         handlerFetchUsers,
-        HandlerAddUser,
+        handlerAddUser,
         handlerUpdateUser,
         handlerDeleteUser,
       }}

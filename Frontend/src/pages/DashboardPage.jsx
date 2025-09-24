@@ -3,15 +3,17 @@ import Search from "../components/Search";
 import CustomAllBtn from "../components/CustomAllBtn";
 import { useUsers } from "../context_Api/UserContext";
 import UserTable from "../components/UserTable";
-import { useFilter } from "../context_Api/UserFilterContext";
-import UserFilterDialog from "../components/UserFilterDialog";
+import CustomeAllDialog from "../components/CustomeAllDialog";
+import { useDialog } from "../context_Api/DialogContext";
+import SkeletonLoader from '../components/SkeletonLoader';
 
 const DashboardPage = () => {
   //* IsLaptop and isTablet that handle responsive. when screen size is laptop size or Tablet size.
   const isLaptop = useMediaQuery("(max-width:1160px)");
   const isTablet = useMediaQuery("(max-width:800px)");
+  
   const { loading } = useUsers();
-  const {openFilterDialog} = useFilter();
+  const {openDialogType} = useDialog();
   return (
     <Box
       sx={{
@@ -43,12 +45,12 @@ const DashboardPage = () => {
           my: 5,
         }}
       >
-        {loading ? "Loading..." : <UserTable />}
+        {loading? <SkeletonLoader/> : <UserTable />}
       </Container>
 
       {/* Open Filter or Add dialog */}
       {
-        openFilterDialog && <UserFilterDialog/>
+        openDialogType && <CustomeAllDialog/>
       }
     </Box>
   );

@@ -2,12 +2,10 @@ import React from "react";
 import { Button } from "@mui/material";
 import FilterListIcon from "@mui/icons-material/FilterList";
 import PersonAddIcon from "@mui/icons-material/PersonAdd";
-import { useFilter } from "../context_Api/UserFilterContext";
+import { useDialog } from "../context_Api/DialogContext";
 
 const CustomAllBtn = ({ useIn }) => {
-  const {openFilterDialog, handleOpenFilterDialog} = useFilter();
-  console.log(openFilterDialog)
-
+  const { handleOpenDialog  } = useDialog();
   const renderButton = () => {
     switch (useIn) {
       case "filter":
@@ -16,7 +14,7 @@ const CustomAllBtn = ({ useIn }) => {
             startIcon={<FilterListIcon />}
             variant="contained"
             sx={{ bgcolor: "secondary.dark", mr: 2 }}
-            onClick={handleOpenFilterDialog}
+            onClick={() => handleOpenDialog("filter")}
           >
             Filter
           </Button>
@@ -31,7 +29,7 @@ const CustomAllBtn = ({ useIn }) => {
               color: "text.secondary",
             }}
             startIcon={<PersonAddIcon />}
-            // onClick={onClick}
+            onClick={() => handleOpenDialog("create")}
           >
             Create User
           </Button>
